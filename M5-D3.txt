@@ -4,7 +4,53 @@ ExpressJS => middlewawre & error handling
 Reinforce NodeJS & ExpressJS basics
 
 you will have discovered middleware world 
-you will have been working with try and error 
+you will have been working with try and error
+
+https://github.com/nclBaz/strive-m5-d3-aug21
+
+type : module => just to be able to use the brand new syntax
+dev : nodemon -e js./src/server.js
+
+Created CRUD for books 
+
+Middlewares = it is a function 
+Functions with a particular signature (req, res, next) => {}
+Functions which have access to request and response objects 
+They can execute any code 
+End the request-response cycle
+
+Middlewares flow 
+incoming request => A middleware => Request Handler
+
+error middlewares
+are functions 
+functions with a particular syntax (error, req, res, next)
+the usage is different than normal ones 
+error middlewares need to be used after the endpoints
+request handlers can send errors to error handlers by using next(error)
+
+try catch 
+
+create file errorHandlers
+
+const errorHandler = (err, req, res, next) =>{
+	console.log(err)
+	res.status(500).send({message : "Generic server error"})
+}
+
+
+import {errorHandler} from "errorHandlers"
+
+server.use(errorHandler)
+
+ npm i express-validator
+
+create file validation.js
+
+import {body} from "express-validator"
+
+body("firstName").exists().withMessage("First Name is a mandatory field!")
+
 
 
  
