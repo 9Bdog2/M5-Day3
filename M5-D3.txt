@@ -1,0 +1,10 @@
+NodeJS & ExpressJS => review of past concepts
+ExpressJS => middlewawre & error handling 
+
+Reinforce NodeJS & ExpressJS basics
+
+you will have discovered middleware world 
+you will have been working with try and error 
+
+
+ 
