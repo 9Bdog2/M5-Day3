@@ -1,6 +1,7 @@
 import express from "express";
 import listEndpoints from "express-list-endpoints";
 import authorsRouter from "./authors/index.js";
+import postsRouter from "./posts/index.js";
 import cors from "cors";
 
 const server = express();
