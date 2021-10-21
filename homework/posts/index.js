@@ -27,13 +27,13 @@ const writePosts = () =>
 //1 POST CRUD ENDPOINT
 postsRouter.post("/", postsValidationMiddelwares, (req, res, next) => {
   try {
-    const newPost = { ...req.body, createdAt: new Date(), ID: uniqid() };
+    const newPost = { ...req.body, createdAt: new Date(), _id: uniqid() };
     const posts = getPosts();
 
     posts.push(newPost);
     writePosts(posts);
 
-    res.status(201).send({ ID: newPost.id });
+    res.status(201).send({ _id: newPost.id });
   } catch (error) {
     next(error);
   }
@@ -51,6 +51,55 @@ postsRouter.get("/", (req, res, next) => {
     } else {
       res.send(posts);
     }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//3 GET CRUD ENDPOINT
+postsRouter.get("/:postId", (req, res, next) => {
+  try {
+    const posts = getPosts();
+    const post = posts.find((b) => b._id === req.params.postId);
+    if (post) {
+      res.send(post);
+    } else {
+      next(createHttpError(404, `Post with id ${req.params.postId}`));
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+//4 PUT CRUD ENDPOINT
+
+postsRouter.put("/:postId", (req, res, next) => {
+  try {
+    const posts = getPosts();
+    const index = posts.findIndex((post) => post._id === req.params.postId);
+    const postToModify = posts[index];
+    const updatedFields = req.body;
+
+    const updatedPost = { ...postToModify, ...updatedFields };
+
+    posts[index] = updatedPost;
+
+    writePosts(posts);
+    res.send(updatedPost);
+  } catch (error) {
+    next(error);
+  }
+});
+
+//5 Delete CRUD ENDPOINT
+postsRouter.delete("/:postId", (req, res, next) => {
+  try {
+    const posts = getPosts();
+    const remainingPosts = posts.filter(
+      (post) => post._id !== req.params.postId
+    );
+    writePosts(remainingPosts);
+    res.status(204).send();
   } catch (error) {
     next(error);
   }
