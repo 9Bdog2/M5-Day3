@@ -21,7 +21,7 @@ const postsJSONPath = join(
 );
 
 const getPosts = () => JSON.parse(fs.readFileSync(postsJSONPath));
-const writePosts = () =>
+const writePosts = (content) =>
   fs.writeFileSync(postsJSONPath, JSON.stringify(content));
 
 //1 POST CRUD ENDPOINT
@@ -33,7 +33,7 @@ postsRouter.post("/", postsValidationMiddelwares, (req, res, next) => {
     posts.push(newPost);
     writePosts(posts);
 
-    res.status(201).send({ _id: newPost.id });
+    res.status(201).send({ _id: newPost._id });
   } catch (error) {
     next(error);
   }
@@ -99,7 +99,7 @@ postsRouter.delete("/:postId", (req, res, next) => {
       (post) => post._id !== req.params.postId
     );
     writePosts(remainingPosts);
-    res.status(204).send();
+    res.status(204).send("The content is deleted!");
   } catch (error) {
     next(error);
   }
