@@ -22,6 +22,7 @@ class Blog extends Component {
   }
 
   render() {
+    
     const { loading, blog } = this.state;
     if (loading) {
       return <div>loading</div>;
@@ -39,8 +40,8 @@ class Blog extends Component {
               <div className="blog-details-info">
                 <div>{blog.createdAt}</div>
                 <div>{`${blog.readTime.value} ${blog.readTime.unit} read`}</div>
-                <div style={{marginTop:20}}>
-                  <BlogLike defaultLikes={["123"]} onChange={console.log}/>
+                <div style={{ marginTop: 20 }}>
+                  <BlogLike defaultLikes={["123"]} onChange={console.log} />
                 </div>
               </div>
             </div>

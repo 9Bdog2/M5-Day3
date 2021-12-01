@@ -14,7 +14,19 @@ export default class NewBlogPost extends Component {
     this.setState({ text: value });
   }
 
+  componentDidMount() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title: "test", body: "test" }),
+    };
+    fetch("http://localhost3001/blogPosts", requestOptions)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+  }
+
   render() {
+    const {NewBlogPost} = this.props;
     return (
       <Container className="new-blog-container">
         <Form className="mt-5">

@@ -10,6 +10,13 @@ const authorsRouter = express.Router();
 const currentFilePath = fileURLToPath(import.meta.url);
 const currentFolderPath = dirname(currentFilePath);
 const authorsJSONPath = join(currentFolderPath, "authors.json");
+
+const blogPostsJSONPath = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "./blogPosts.json"
+);
+console.log(blogPostsJSONPath);
+const getBlogPosts = () => JSON.parse(fs.readFileSync(blogPostsJSONPath));
 //--------------------------------------
 /* 
 name
@@ -110,10 +117,11 @@ GET /authors/:id/blogPosts/ => get all the posts for an author with a given ID
 
 authorsRouter.get("/:authorId/blogPosts", (req, res, next) => {
   try {
-    const fileContent = fs.readFileSync(authorsJSONPath);
-    const authors = JSON.parse(fileContent);
-    const author = authors.find((author) => author.id === req.params.authorId);
-    res.status(200).send(author.blogPosts);
+    const blogPosts = getBlogPosts();
+    const authorBlogPosts = blogPosts.filter(
+      (blogPost) => blogPost.author._id === req.params.authorId
+    );
+    res.status(200).send(authorBlogPosts);
   } catch (error) {
     next(error);
   }
