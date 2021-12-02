@@ -1,9 +1,6 @@
 export const badRequestHandlers = (err, req, res, next) => {
   if (err.status === 400) {
-    res.status(400).json({
-      status: 400,
-      error: err.message,
-    });
+    res.status(400).json(err);
   } else {
     next(err);
   }

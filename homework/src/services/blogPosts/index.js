@@ -63,7 +63,11 @@ blogPostsRouter.post("/", postBlogValidation, (req, res, next) => {
   try {
     const errorList = validationResult(req);
     if (!errorList.isEmpty()) {
-      next(createHttpError(400, "Invalid blogpost data"));
+      next(
+        createHttpError(400, "Invalid blogpost data", {
+          errors: errorList.array(),
+        })
+      );
     } else {
       const newBlogPost = {
         ...req.body,

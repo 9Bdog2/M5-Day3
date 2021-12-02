@@ -13,7 +13,7 @@ const authorsJSONPath = join(currentFolderPath, "authors.json");
 
 const blogPostsJSONPath = join(
   dirname(fileURLToPath(import.meta.url)),
-  "./blogPosts.json"
+  "../blogPosts/blogPosts.json"
 );
 console.log(blogPostsJSONPath);
 const getBlogPosts = () => JSON.parse(fs.readFileSync(blogPostsJSONPath));
